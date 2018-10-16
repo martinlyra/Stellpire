@@ -25,3 +25,35 @@ html, body {
   text-align: left;
   white-space: pre;
 }
+
+.trait {
+  width: 250px;
+  height: 30px;
+
+  border: 1px dashed rgba(0,0,0,0.2);
+}
+
+.trait img {
+  float:left;
+  margin: 3px;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
+.trait #trait_name {
+  float:left;
+  margin:3px;
+  width: auto;
+  max-width: 184px;
+  text-overflow: clip;
+  display: inline-block;
+}
+
+.trait #trait_cost {
+  float:right;
+  margin: 3px 6px;
+  width: 14px;
+  display: inline-block;
+  text-align: right;
+}

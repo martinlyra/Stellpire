@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:html';
 import 'dart:convert';
 import 'src/pdx-data-tools/parser.dart';
+import 'src/pdx-data-tools/localization.dart';
 import 'src/pdx-stellaris/species-trait.dart';
 import 'src/web-io/resource.dart';
 
@@ -18,6 +19,8 @@ class PdxSteApplication {
   String version = "";
 
   Map<String, Future<Map<String, Future<Object>>>> data = Map();
+
+  List<Future> loadingResources = List();
 
   PdxSteApplication();
 
@@ -46,11 +49,26 @@ class PdxSteApplication {
     _loadVersionData(version).then((param) => testLoadTraits());
   }
 
+  void _loadLocalization(String basePath, Map localizationMap)
+  {
+    for (var language in (localizationMap).keys) {
+      for (var file in localizationMap[language]) {
+        loadingResources.add(Resource.fetch("${basePath}/${file}").then(
+                (file) {
+              localization.addLocalization(language, file.content);
+            }
+        ));
+      }
+    }
+  }
+
   Future _loadVersionData(String targetVersion) async
   {
     var basePath = "ref/${targetVersion}";
     var manifest = jsonDecode((await Resource
         .fetch("${basePath}/version_manifest.json")).content);
+
+    _loadLocalization(basePath, manifest['Localization']);
 
     var loaderTargets = manifest["LoaderTargets"];
     for (var targetKey in (loaderTargets as Map).keys)
@@ -70,6 +88,8 @@ class PdxSteApplication {
           );
         }
 
+        loadingResources.addAll(resources.values);
+
         data[targetKey] = Future(() async {
           for (var loading in resources.values)
             await loading;
@@ -86,12 +106,11 @@ class PdxSteApplication {
     var out = querySelector("#output");
 
     for (var file in files.keys) {
-      print(file);
       var traits = (await files[file]) as Map;
       for (String trait in traits.keys) {
         if (trait.startsWith("@"))
           continue;
-        print(traits[trait]);
+
         new TraitDom(out, SpeciesTrait.fromJson(trait, traits[trait]));
       }
     }
