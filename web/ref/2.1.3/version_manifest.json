@@ -1,0 +1,58 @@
+{
+  "Id": "STELLARIS",
+  "Game": "Stellaris",
+
+  "Version": "2.1.3",
+
+  "Localization": {
+    "english": [
+        "localization/l_english.yml"
+    ]
+  },
+
+  "LoaderTargets": {
+    "ethics": {
+      "folder": "common/ethics",
+      "files": [
+        "00_ethics.txt"
+      ]
+    },
+    "authorities": {
+      "folder": "common/governments/authorities",
+      "files": [
+        "00_authorities.txt"
+      ]
+    },
+    "civics": {
+      "folder": "common/governments/civics",
+      "files": [
+        "00_civics.txt"
+      ]
+    },
+    "traits": {
+      "folder": "common/traits",
+      "files": [
+        "01_species_traits_habitability.txt",
+        "04_species_traits.txt"
+      ]
+    },
+    "portraits": {
+      "folder": "gfx/portraits/portraits",
+      "files": [
+        "00_portraits_main.txt",
+        "01_portraits_mammalian.txt",
+        "02_portraits_reptilian.txt",
+        "03_portraits_avian.txt",
+        "04_portraits_arthropoid.txt",
+        "05_portraits_fungoid.txt",
+        "06_portraits_molluscoid.txt",
+        "07_portraits_human.txt",
+        "08_portraits_plantoid.txt",
+        "09_portraits_humanoid.txt",
+        "10_portraits_synthetic_dawn.txt",
+        "11_portraits_humanoid_hp.txt",
+        "12_portraits_distant_stars.txt"
+      ]
+    }
+  }
+}
