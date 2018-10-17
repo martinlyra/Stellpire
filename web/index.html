@@ -9,13 +9,16 @@
     <title>Stellpire</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.ico">
+
     <script defer src="main.dart.js"></script>
 </head>
 
 <body>
     <div id="pre-screen">This is a Dart application run on JavaScript<br>You need JavaScript enabled</div>
-
-  <div id="output">This should be replaced</div>
-
+    <app></app>
+    <script async>
+            let preScreen = document.getElementById("pre-screen");
+            preScreen.innerHTML = "Loading<br>Stellpire is a heavyweight, please be patient";
+    </script>
 </body>
 </html>

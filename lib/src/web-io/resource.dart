@@ -7,6 +7,8 @@ class Resource
   String path;
   String fileName;
 
+  int httpStatus;
+
   Resource()
   {
 
@@ -21,6 +23,7 @@ class Resource
     var httpResponse = await HttpRequest.request(url)
         .timeout(Duration(milliseconds: timeoutMs));
 
+    res.httpStatus = httpResponse.status;
     res.content = httpResponse.responseText;
 
     return res;
