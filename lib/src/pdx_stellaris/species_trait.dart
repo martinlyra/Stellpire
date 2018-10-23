@@ -1,42 +1,45 @@
 import 'dart:html';
 
-import '../pdx-data-tools/localization.dart';
+import 'package:pdx_data_tools/pdx_data_tools.dart';
+import 'species_trait.pdt_factory.g.dart';
 
+@PdxDataObject()
 class SpeciesTrait
 {
-  String name = "undefined";
-  String iconName = "trait_unknown";
-  int cost = 0;
+  String key;
 
-  bool initial = true;
-  bool randomized = true;
-  bool modification = true;
+  @DataField("name", "undefined")
+  String name;
+
+  @DataField("icon_name", "trait_unknown")
+  String iconName;
+
+  @DataField("cost", 0)
+  int cost;
+
+  @DataField("initial", true)
+  bool initial;
+  @DataField("randomized", true)
+  bool randomized;
+  @DataField("modification", true)
+  bool modification;
+  @DataField("improves_leaders", false)
   bool improvesLeaders = false;
+  @DataField("advanced_trait", false)
   bool advancedTrait = false;
 
+  @DataField("opposites", List)
+  List opposites;
+  @DataField("allowed_archtypes", List)
+  List allowedArchtypes;
 
-  List opposites = List();
-  List allowedArchtypes = List();
-
-  List modifiers = List();
+  @DataField("modifier", List)
+  List modifiers;
 
   SpeciesTrait();
 
-  factory SpeciesTrait.fromJson(String name, Map json)
-  {
-    var inst = new SpeciesTrait();
-
-    inst.name = name;
-    if (json.containsKey('icon'))
-      inst.iconName = json['icon'];
-    else
-      inst.iconName = name;
-
-    if (json.containsKey('cost'))
-      inst.cost = int.parse(json['cost']);
-
-    return inst;
-  }
+  factory SpeciesTrait.deserialize(String key, Map map) =>
+      deserializeSpeciesTrait(key, map);
 }
 
 class TraitDom
