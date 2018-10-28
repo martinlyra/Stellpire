@@ -1,12 +1,15 @@
 <div >
-    <table *ngIf="items.isNotEmpty">
-        <tr class="trait" *ngFor="let item of items; let i=index" >
-            <td id="trait_name">
-                {{getString(item)}}
-            </td>
-            <td id="trait_cost">
-                {{getCost(item)}}
-            </td>
-        </tr>
-    </table>
+    <ul *ngIf="items.isNotEmpty">
+        <li class="trait" *ngFor="let item of items; let i=index" >
+            <div id="trait_icon">
+                <img [src]="item.displayIcon">
+            </div>
+            <div id="trait_name">
+                {{item.displayString}}
+            </div>
+            <div id="trait_cost">
+                {{item.displayCost}}
+            </div>
+        </li>
+    </ul>
 </div>

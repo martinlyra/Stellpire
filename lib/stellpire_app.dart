@@ -40,12 +40,19 @@ class StellpireApplication extends AfterViewInit {
 
     currentGameData = await gameDataService.loadDefault();
 
-    availableTraits.imageDirectory = "images/icons/traits";
-    availableTraits.targetLocale = "english";
-    availableTraits.localization = localization;
-    availableTraits.items = currentGameData.speciesTraits.where(
-        (trait) => !trait.isHabitatPreference() && trait.initial
+    var traits = currentGameData.speciesTraits.where(
+        (trait) => trait.initial && !trait.isHabitatPreference()
+    ).expand(
+        (trait) =>
+            [
+              new SpeciesTraitItemFactory(
+                "images/icons/traits",
+                "english",
+                localization).facilitate(trait
+            )]
     );
+
+    availableTraits.items = traits;
     /*availableTraits.factory =
     new SpeciesTraitTableEntryFactory(
         "images/icons/traits",

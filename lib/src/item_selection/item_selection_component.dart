@@ -17,37 +17,7 @@ import 'package:pdx_data_tools/pdx_data_tools.dart';
 )
 class ItemSelectionComponent extends OnInit
 {
-  Iterable<DataObject> items = List();
-  String imageDirectory;
-  String targetLocale;
-  Localization localization;
-
-  TableItemFactory<DataObject> factory;
-
-  String getString(DataObject object) {
-    if (object is SpeciesTrait)
-      return
-        localization.getLocalizedString(
-            targetLocale,
-            object.key);
-    return "";
-  }
-
-  String getIcon(DataObject object) {
-    if (object is SpeciesTrait)
-      return "$imageDirectory/${object.key}.dds.png";
-    return "";
-  }
-
-  int getCost(DataObject object) {
-    if (object is SpeciesTrait)
-      return object.cost;
-    return 0;
-  }
-
-  Element asItem(DataObject object) {
-    return factory?.facilitate(object);
-  }
+  Iterable<TableItem> items = List();
 
   @override
   void ngOnInit() {

@@ -26,6 +26,10 @@ html, body {
   white-space: pre;
 }
 
+item-selection ul {
+    list-style-type: none;
+}
+
 .trait {
   width: 250px;
   height: 30px;
@@ -56,4 +60,8 @@ html, body {
   width: 14px;
   display: inline-block;
   text-align: right;
+}
+
+.trait:hover {
+  border-color: red;
 }
