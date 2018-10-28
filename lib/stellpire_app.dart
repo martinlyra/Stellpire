@@ -1,11 +1,11 @@
 import 'dart:core';
-import 'dart:async';
-import 'dart:html';
-import 'dart:convert';
 
+import 'package:Stellpire/game_data.dart';
 import 'package:Stellpire/game_data_service.dart';
 import 'package:Stellpire/src/item_selection/item_selection_component.dart';
+import 'package:Stellpire/table_item_factory.dart';
 import 'package:angular/angular.dart';
+import 'package:pdx_data_tools/pdx_data_tools.dart';
 
 @Component(
   selector: 'app',
@@ -23,7 +23,7 @@ class StellpireApplication extends AfterViewInit {
   @ViewChild("traits_selected")
   ItemSelectionComponent selectedTraits;
 
-  String version = "";
+  GameData currentGameData;
 
   StellpireApplication();
 
@@ -34,29 +34,22 @@ class StellpireApplication extends AfterViewInit {
     return inst;
   }
 
-  /*
-  void testLoadTraits() async
-  {
-    var files = await data["traits"];
-
-    var out = querySelector("#output");
-
-    for (var file in files.keys) {
-      var traits = (await files[file]) as Map;
-      for (String trait in traits.keys) {
-        if (trait.startsWith("@"))
-          continue;
-
-        new TraitDom(out, SpeciesTrait.fromJson(trait, traits[trait]));
-      }
-    }
-  }*/
-
   @override
   void ngAfterViewInit() async {
     await gameDataService.whenInitialized();
-    var traits = gameDataService.buildTraitObjects();
-    availableTraits.items = traits;
-    // TODO: implement ngAfterViewInit
+
+    currentGameData = await gameDataService.loadDefault();
+
+    availableTraits.imageDirectory = "images/icons/traits";
+    availableTraits.targetLocale = "english";
+    availableTraits.localization = localization;
+    availableTraits.items = currentGameData.speciesTraits.where(
+        (trait) => !trait.isHabitatPreference() && trait.initial
+    );
+    /*availableTraits.factory =
+    new SpeciesTraitTableEntryFactory(
+        "images/icons/traits",
+        "english",
+        localization);*/
   }
 }

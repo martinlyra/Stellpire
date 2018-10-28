@@ -1,13 +1,13 @@
 import 'dart:html';
 
+import 'package:Stellpire/src/pdx_stellaris/data_object.dart';
+import 'package:Stellpire/src/pdx_stellaris/abstract_object_factory.dart';
 import 'package:pdx_data_tools/pdx_data_tools.dart';
 import 'species_trait.pdt_factory.g.dart';
 
 @PdxDataObject()
-class SpeciesTrait
+class SpeciesTrait extends DataObject
 {
-  String key;
-
   @DataField("name", "undefined")
   String name;
 
@@ -28,17 +28,24 @@ class SpeciesTrait
   @DataField("advanced_trait", false)
   bool advancedTrait = false;
 
-  @DataField("opposites", List)
+  @DataField("opposites", [])
   List opposites;
-  @DataField("allowed_archtypes", List)
+  @DataField("allowed_archtypes", [])
   List allowedArchtypes;
 
-  @DataField("modifier", List)
-  List modifiers;
+  @DataField("modifier", {})
+  Map modifiers;
 
   SpeciesTrait();
 
-  factory SpeciesTrait.deserialize(String key, Map map) =>
+  bool isHabitatPreference() {
+    return key.contains("preference");
+  }
+}
+
+class SpeciesTraitFactory implements AbstractObjectFactory<SpeciesTrait> {
+  @override
+  SpeciesTrait facilitate(String key, Map map) =>
       deserializeSpeciesTrait(key, map);
 }
 
